@@ -47,14 +47,13 @@ const App = () => {
   const [fotoSelecionada, setFotoSelecionada] = useState(null)
   const [busca, setBusca] = useState('')
 
-  useEffect(() => {
-
-	busca.length >= 3
+	useEffect(() => {
+		
+		busca.length >= 3
 		? setFotosGaleria(fotos.filter( foto => foto.titulo.includes(busca) ))
-		: setFotosGaleria(fotos)
-	
-	
-  }, [busca])
+		: setFotosGaleria
+			
+	}, [busca])
 
   const aoAlternarFavorito = (foto) => {
 
