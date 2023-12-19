@@ -10,13 +10,12 @@ const HeaderStyle = styled.header`
     }
 `
 
-
-const Cabecalho = () => {
+const Cabecalho = ({ aoBuscar }) => {
   return (
     <>
         <HeaderStyle >
             <img src="/imagens/logo.png" alt="Logo" />
-            <CampoTexto /> 
+            <CampoTexto aoBuscar={aoBuscar} /> 
         </HeaderStyle > 
     </>
   )

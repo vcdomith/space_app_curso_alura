@@ -19,10 +19,11 @@ const ImageListContainerStyle = styled.ul`
   padding: 0;
 
   display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
 `
 
-const Galeria = ({ fotos = [] }) => {
+const Galeria = ({ fotos = [], aoSelecionarFoto, aoAlternarFavorito }) => {
   return (
     <>
       <Tags />
@@ -32,7 +33,14 @@ const Galeria = ({ fotos = [] }) => {
 
           <Titulo >Navegue pela galeria</Titulo>
           <ImageListContainerStyle>
-            {fotos.map( foto => <Imagem key ={foto.id} foto={foto} ></Imagem>)}
+            {fotos.map( foto => 
+              <Imagem 
+                aoAlternarFavorito={aoAlternarFavorito}
+                aoZoomSolicitado={aoSelecionarFoto}
+                key ={foto.id} 
+                foto={foto} 
+              >
+              </Imagem>)}
           </ImageListContainerStyle>
 
         </SecaoFluida>

@@ -33,11 +33,15 @@ const IconeLupa = styled.img`
     height: 38px;
 `
 
-const CampoTexto = (props) => {
+const CampoTexto = ({ aoBuscar }) => {
   return (
     <>
         <ContainerStyle >
-            <InputStyle placeholder='O que você procura?' {...props} />
+            <InputStyle 
+                onChange={evento => aoBuscar(evento.target.value)}
+                placeholder='O que você procura?'
+                // {...props} 
+                />
             <IconeLupa src={search} alt='Icone de lupa' />
         </ContainerStyle >
     </>

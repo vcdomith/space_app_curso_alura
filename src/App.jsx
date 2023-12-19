@@ -6,7 +6,9 @@ import Banner from "./components/Banner/Banner"
 import Galeria from "./components/Galeria/Galeria"
 
 import fotos from './fotos.json'
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import ModalZoom from "./components/ModalZoom/ModalZoom"
+
 
 const FundoGradiente = styled.div`
 
@@ -41,7 +43,39 @@ const ConteudoGaleria = styled.section`
 
 const App = () => {
 
-  const [fotosGaleria, setFotoGaleria] = useState(fotos)
+  const [fotosGaleria, setFotosGaleria] = useState(fotos)
+  const [fotoSelecionada, setFotoSelecionada] = useState(null)
+  const [busca, setBusca] = useState('')
+
+  useEffect(() => {
+
+	busca.length >= 3
+		? setFotosGaleria(fotos.filter( foto => foto.titulo.includes(busca) ))
+		: setFotosGaleria(fotos)
+	
+	
+  }, [busca])
+
+  const aoAlternarFavorito = (foto) => {
+
+	foto.id === fotoSelecionada?.id &&
+		setFotoSelecionada({
+			...fotoSelecionada,
+			favorita: !fotoSelecionada.favorita
+		})
+
+	setFotosGaleria(fotosGaleria.map( fotoGaleria => {
+
+		return {
+			...fotoGaleria,
+			favorita: fotoGaleria.id === foto.id
+						? !foto.favorita
+						: fotoGaleria.favorita
+		}
+
+	}))
+
+  }
 
   return (
     <FundoGradiente >
@@ -50,7 +84,7 @@ const App = () => {
 
 		<AppContainer>
 
-			<Cabecalho />
+			<Cabecalho aoBuscar={setBusca} />
 
 			<MainContainer>
 				
@@ -61,13 +95,23 @@ const App = () => {
 						texto='A galeria mais completa do espaço!' 
 						backgroundImage='src/assets/banner.png'
 					/>
-					<Galeria fotos={fotosGaleria} />
+					<Galeria 
+						aoAlternarFavorito={aoAlternarFavorito}
+						aoSelecionarFoto={foto => setFotoSelecionada(foto)} 
+						fotos={fotosGaleria} 
+					/>
 
 				</ConteudoGaleria>
 
 			</MainContainer>
 
 		</AppContainer>
+
+		<ModalZoom
+			aoAlternarFavorito={aoAlternarFavorito} 
+			foto={fotoSelecionada} 
+			aoFechar={() => setFotoSelecionada(null)}
+		/>
 
 	</FundoGradiente >
   )
